@@ -42,27 +42,26 @@ input[type=color].inp{height:40px;padding:2px}
 .ebtn:hover{background:var(--color-blush)}
 .ebtn-l{width:auto;height:1.9rem;padding:0 .75rem;gap:.35rem;font-weight:700}
 .btn-cute-minimal {
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
-  background-color: #ffffff;
-  border: 2px dashed var(--color-border);
-  color: var(--color-text);
+  gap: 10px;
+  padding: 10px 16px;
+  background-color: #FFF9FB;
+  border: 2px dashed #FFB6C1;
+  color: #5C4040;
   font-family: 'Itim', cursive;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: bold;
-  border-radius: 9999px;
+  border-radius: 1.25rem;
   box-shadow: 0 2px 6px rgba(255,154,162,0.15);
   transition: all 0.2s ease;
   cursor: pointer;
   width: 100%;
-  justify-content: center;
 }
 .btn-cute-minimal:hover {
-  background-color: var(--color-blush);
+  background-color: #FFE4E9;
   border-style: solid;
-  border-color: var(--color-primary);
+  border-color: #FF7096;
   transform: translateY(-2px);
 }
 </style>
@@ -196,18 +195,22 @@ input[type=color].inp{height:40px;padding:2px}
   <button class="admin-only ebtn ebtn-l mx-auto" onclick="editSection('footer')"><i class="fa-solid fa-pen"></i> แก้ไขท้ายเว็บ</button>
 </footer>
 
-<div id="admin-menu-modal" class="fixed inset-0 bg-soft-brown/40 backdrop-blur-custom z-50 hidden flex items-center justify-center p-4">
-  <div class="bg-[var(--color-text)] text-white rounded-[2rem] max-w-xs w-full p-6 relative border border-white/20 shadow-soft-float space-y-4" style="background-color: var(--color-text);">
-    <button onclick="$('admin-menu-modal').classList.add('hidden')" class="absolute top-4 right-4 w-7 h-7 rounded-full bg-white/20 text-xs flex items-center justify-center">✕</button>
-    <div class="text-center font-handwritten text-lg font-bold flex items-center justify-center gap-2">
-      <i class="fa-solid fa-pen-to-square"></i> โหมดแก้ไข:
+<div id="admin-menu-modal" class="fixed inset-0 bg-soft-brown/30 backdrop-blur-custom z-50 hidden flex items-center justify-center p-4">
+  <div class="bg-cream-card text-soft-brown rounded-[2.5rem] max-w-xs w-full p-6 relative border-4 border-white shadow-soft-float space-y-4">
+    <button onclick="$('admin-menu-modal').classList.add('hidden')" class="absolute top-4 right-4 w-7 h-7 rounded-full bg-soft-blush text-xs flex items-center justify-center hover:bg-blush-dark hover:text-white transition">✕</button>
+    <div class="text-center space-y-1">
+      <div class="w-10 h-10 rounded-2xl bg-soft-blush text-blush-dark mx-auto flex items-center justify-center shadow-sm">
+        <i class="fa-solid fa-wand-magic-sparkles"></i>
+      </div>
+      <h3 class="font-handwritten text-xl font-bold">โหมดแก้ไข</h3>
+      <p class="text-[11px] text-muted-brown">จัดการและตั้งค่าร้านค้าง่ายๆ</p>
     </div>
-    <div class="space-y-2.5">
-      <button onclick="editTheme(); $('admin-menu-modal').classList.add('hidden');" class="btn-cute-minimal"><i class="fa-solid fa-palette text-pink-500"></i> ธีมสี</button>
-      <button onclick="openChangePasswordModal(); $('admin-menu-modal').classList.add('hidden');" class="btn-cute-minimal"><i class="fa-solid fa-key text-yellow-500"></i> รหัสผ่าน</button>
-      <button onclick="resetTheme(); $('admin-menu-modal').classList.add('hidden');" class="btn-cute-minimal"><i class="fa-solid fa-rotate-left text-blue-500"></i> รีเซ็ตสี</button>
-      <button onclick="resetAll(); $('admin-menu-modal').classList.add('hidden');" class="btn-cute-minimal"><i class="fa-solid fa-triangle-exclamation text-orange-500"></i> รีเซ็ตทั้งหมด</button>
-      <button onclick="adminLogout(); $('admin-menu-modal').classList.add('hidden');" class="w-full py-2 bg-red-400 hover:bg-red-500 text-white rounded-2xl font-bold transition text-xs shadow-sm flex items-center justify-center gap-1.5"><i class="fa-solid fa-right-from-bracket"></i> ออก</button>
+    <div class="space-y-2.5 pt-1">
+      <button onclick="editTheme(); $('admin-menu-modal').classList.add('hidden');" class="btn-cute-minimal"><i class="fa-solid fa-palette text-pink-400 text-base"></i> <span>ธีมสี</span></button>
+      <button onclick="openChangePasswordModal(); $('admin-menu-modal').classList.add('hidden');" class="btn-cute-minimal"><i class="fa-solid fa-key text-amber-400 text-base"></i> <span>รหัสผ่าน</span></button>
+      <button onclick="resetTheme(); $('admin-menu-modal').classList.add('hidden');" class="btn-cute-minimal"><i class="fa-solid fa-rotate-left text-sky-400 text-base"></i> <span>รีเซ็ตสี</span></button>
+      <button onclick="resetAll(); $('admin-menu-modal').classList.add('hidden');" class="btn-cute-minimal"><i class="fa-solid fa-triangle-exclamation text-rose-400 text-base"></i> <span>รีเซ็ตทั้งหมด</span></button>
+      <button onclick="adminLogout(); $('admin-menu-modal').classList.add('hidden');" class="w-full py-2.5 bg-rose-400 hover:bg-rose-500 text-white rounded-2xl font-bold transition text-xs shadow-sm flex items-center justify-center gap-1.5 font-handwritten mt-2"><i class="fa-solid fa-right-from-bracket"></i> ออกจากระบบ</button>
     </div>
   </div>
 </div>
@@ -569,7 +572,7 @@ function editProduct(id){
 function openProductModal(id){
   const p=products.find(x=>x.id===id);if(!p)return;
   $('modal-product-content').innerHTML=`<div class="space-y-4">
-    <div class="aspect-video rounded-2xl overflow-hidden bg-warm-cream border-2 border-soft-blush"><img src="${esc(p.img)}" class="w-full h-full object-cover" onerror="this.src='${PLACE}'"></div>
+    <div class="aspect-square w-full rounded-2xl overflow-hidden bg-warm-cream border-2 border-soft-blush"><img src="${esc(p.img)}" class="w-full h-full object-cover" onerror="this.src='${PLACE}'"></div>
     <div><span class="text-[11px] font-bold text-blush-dark bg-soft-blush px-3 py-1 rounded-full">${esc(p.badge||'Handmade')}</span>
     <h3 class="font-handwritten text-xl font-bold mt-2">${esc(p.name)}</h3>
     <p class="text-xs text-muted-brown mt-1 leading-relaxed">${esc(p.desc||'')}</p></div>
