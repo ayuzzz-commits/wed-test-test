@@ -36,28 +36,28 @@ h1,h2,h3,h4,.font-handwritten{font-family:'Itim',cursive}
 input[type=color].inp{height:40px;padding:2px}
 .admin-only{display:none!important}
 .editing .admin-only{display:inline-flex!important}
-.editing .review-edit-btn {display:inline-flex!important}
 .editing #review-btn-container {display:none!important}
 [data-edit]{white-space:pre-line}
 .ebtn{width:1.75rem;height:1.75rem;border-radius:9999px;background:#fff;border:1.5px solid var(--color-primary);color:var(--color-text);font-size:.7rem;align-items:center;justify-content:center;box-shadow:0 2px 4px rgba(0,0,0,.12);cursor:pointer}
 .ebtn:hover{background:var(--color-blush)}
 .ebtn-l{width:auto;height:1.9rem;padding:0 .75rem;gap:.35rem;font-weight:700}
-.editing footer{padding-bottom:5.5rem}
 .btn-cute-minimal {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 5px 10px;
+  padding: 6px 12px;
   background-color: #ffffff;
   border: 2px dashed var(--color-border);
   color: var(--color-text);
   font-family: 'Itim', cursive;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: bold;
   border-radius: 9999px;
   box-shadow: 0 2px 6px rgba(255,154,162,0.15);
   transition: all 0.2s ease;
   cursor: pointer;
+  width: 100%;
+  justify-content: center;
 }
 .btn-cute-minimal:hover {
   background-color: var(--color-blush);
@@ -195,14 +195,23 @@ input[type=color].inp{height:40px;padding:2px}
   <p data-edit="footer2">© 2026 Miori Studio. All Rights Reserved.</p>
   <button class="admin-only ebtn ebtn-l mx-auto" onclick="editSection('footer')"><i class="fa-solid fa-pen"></i> แก้ไขท้ายเว็บ</button>
 </footer>
-<div id="admin-bar" class="admin-only fixed bottom-3 left-1/2 -translate-x-1/2 z-40 flex items-center justify-center gap-1.5 flex-wrap bg-soft-brown text-white text-[10px] px-3 py-2 rounded-2xl shadow-soft-float w-[92vw] max-w-md border border-white/20" style="background-color: var(--color-text);">
-  <span class="whitespace-nowrap"><i class="fa-solid fa-pen-to-square"></i> โหมดแก้ไข:</span>
-  <button onclick="editTheme()" class="btn-cute-minimal"><i class="fa-solid fa-palette text-pink-400"></i> ธีมสี</button>
-  <button onclick="openChangePasswordModal()" class="btn-cute-minimal"><i class="fa-solid fa-key text-yellow-400"></i> รหัสผ่าน</button>
-  <button onclick="resetTheme()" class="btn-cute-minimal"><i class="fa-solid fa-rotate-left text-blue-400"></i> รีเซ็ตสี</button>
-  <button onclick="resetAll()" class="btn-cute-minimal"><i class="fa-solid fa-triangle-exclamation text-orange-400"></i> รีเซ็ตทั้งหมด</button>
-  <button onclick="adminLogout()" class="px-2 py-0.5 bg-red-400 hover:bg-red-500 rounded-xl font-bold transition text-[10px]">ออก</button>
+
+<div id="admin-menu-modal" class="fixed inset-0 bg-soft-brown/40 backdrop-blur-custom z-50 hidden flex items-center justify-center p-4">
+  <div class="bg-[var(--color-text)] text-white rounded-[2rem] max-w-xs w-full p-6 relative border border-white/20 shadow-soft-float space-y-4" style="background-color: var(--color-text);">
+    <button onclick="$('admin-menu-modal').classList.add('hidden')" class="absolute top-4 right-4 w-7 h-7 rounded-full bg-white/20 text-xs flex items-center justify-center">✕</button>
+    <div class="text-center font-handwritten text-lg font-bold flex items-center justify-center gap-2">
+      <i class="fa-solid fa-pen-to-square"></i> โหมดแก้ไข:
+    </div>
+    <div class="space-y-2.5">
+      <button onclick="editTheme(); $('admin-menu-modal').classList.add('hidden');" class="btn-cute-minimal"><i class="fa-solid fa-palette text-pink-500"></i> ธีมสี</button>
+      <button onclick="openChangePasswordModal(); $('admin-menu-modal').classList.add('hidden');" class="btn-cute-minimal"><i class="fa-solid fa-key text-yellow-500"></i> รหัสผ่าน</button>
+      <button onclick="resetTheme(); $('admin-menu-modal').classList.add('hidden');" class="btn-cute-minimal"><i class="fa-solid fa-rotate-left text-blue-500"></i> รีเซ็ตสี</button>
+      <button onclick="resetAll(); $('admin-menu-modal').classList.add('hidden');" class="btn-cute-minimal"><i class="fa-solid fa-triangle-exclamation text-orange-500"></i> รีเซ็ตทั้งหมด</button>
+      <button onclick="adminLogout(); $('admin-menu-modal').classList.add('hidden');" class="w-full py-2 bg-red-400 hover:bg-red-500 text-white rounded-2xl font-bold transition text-xs shadow-sm flex items-center justify-center gap-1.5"><i class="fa-solid fa-right-from-bracket"></i> ออก</button>
+    </div>
+  </div>
 </div>
+
 <div id="admin-login-modal" class="fixed inset-0 bg-soft-brown/40 backdrop-blur-custom z-50 hidden flex items-center justify-center p-4">
   <div class="bg-cream-card rounded-[2rem] max-w-sm w-full p-6 relative border-2 border-soft-blush shadow-soft-float space-y-4">
     <button onclick="$('admin-login-modal').classList.add('hidden')" class="absolute top-4 right-4 w-7 h-7 rounded-full bg-soft-blush text-xs">✕</button>
@@ -287,7 +296,7 @@ const DEF_PRODUCTS=[
 {id:3,name:'เทียนหอมไขถั่วเหลือง กลิ่น Cozy Bakery',category:'candle',price:290,rating:5,badge:'Best Aroma',btnText:B,btnLink:'https://line.me',img:'https://images.unsplash.com/photo-1603006905003-be475563bc59?auto=format&fit=crop&w=500&q=80',desc:'เทียนหอมออร์แกนิกกลิ่นขนมปังอบใหม่และวนิลาอ่อนๆ ให้ความรู้สึกผ่อนคลายเหมือนอยู่คาเฟ่อบอุ่น', viewBtnText:'ดูน้อง ★'},
 {id:4,name:'แก้วเซรามิกปั้นมือ ลายหมีน้อย Bear Cup',category:'decor',price:320,rating:4.8,badge:'Cutie Item',btnText:B,btnLink:'https://line.me',img:'https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=500&q=80',desc:'แก้วกาแฟทำมือทรงหน้าหมี คาดจานรองเข้าเซต เข้าไมโครเวฟได้ จิบกาแฟยามเช้าอย่างมีสไตล์', viewBtnText:'ดูน้อง ★'}];
 const DEF_REVIEWS=[
-{id:1,name:'คุณแนนซี',rating:5,date:'25 ต.ค. 2026',comment:'แกะกล่องออกมาประทับใจมากค่ะ! มีเทปวาชิแปะกล่องน่ารักมาก โคมไฟทิวลิปสว่างละมุนสุดๆ',color:'bg-pastel-yellow',rotation:'rotate-[-2deg]'},
+{id:1,name:'คุณแนนซี',rating:5,date:'25 ต.ค. 2026',comment:'แกะกล่องออกมาประทับใจมากค่ะ! มีเทปวาชิแปะกล่องน่ารักมาก โคมไฟทิวลิปสว่างละมุนสุดๆ',color:'bg-pastel-yellow',rotation: 'rotate-[-2deg]'},
 {id:2,name:'คุณคิณ',rating:5,date:'22 ต.ค. 2026',comment:'เทียนหอมกลิ่นหอมฟุ้งทั่วห้องเลยครับ กลิ่นเหมือนขนมปังอบจริงๆ ไว้จะกลับมาอุดหนุนใหม่แน่นอน',color:'bg-soft-blush',rotation:'rotate-[2deg]'}];
 const oi=load('miori_info',null);
 const oldImg=k=>localStorage.getItem(k)||undefined;
@@ -422,12 +431,23 @@ function editMusic(){
     applyMusic();showToast('บันทึกเพลงสำเร็จ');});
 }
 function handleGear(){
-  if(loggedIn){setEditing(!editing);showToast(editing?'เปิดโหมดแก้ไข':'โหมดดูแบบลูกค้า');}
-  else $('admin-login-modal').classList.remove('hidden');
+  if(loggedIn){
+    if(editing){
+      $('admin-menu-modal').classList.remove('hidden');
+    } else {
+      setEditing(true);
+      showToast('เปิดโหมดแก้ไข');
+    }
+  } else {
+    $('admin-login-modal').classList.remove('hidden');
+  }
 }
 function setEditing(val){
   editing=val;
   document.body.classList.toggle('editing',editing);
+  if(editing) {
+    $('admin-menu-modal').classList.remove('hidden');
+  }
 }
 function handleAdminLogin(e){
   e.preventDefault();
@@ -579,16 +599,8 @@ function renderReviews(){
       <div class="text-yellow-400 text-xs">${'<i class="fa-solid fa-star"></i>'.repeat(r.rating)}</div>
     </div>
     <p class="text-xs leading-relaxed">"${esc(r.comment)}"<p>
-    <button class="admin-only review-edit-btn ebtn absolute bottom-2 right-2" title="แก้ไขรีวิว" onclick="editReview(${r.id})"><i class="fa-solid fa-pen"></i></button>
   </div>`).join('');
   updateReviewStats();
-}
-function editReview(id){
-  const r=reviewsData.find(x=>x.id==id);if(!r)return;
-  openForm('แก้ไขรีวิว',[{k:'name',label:'ชื่อลูกค้า',value:r.name},{k:'date',label:'วันที่',value:r.date},{k:'rating',label:'คะแนนดาว',type:'number',min:1,max:5,value:r.rating},{k:'comment',label:'ข้อความรีวิว',type:'textarea',value:r.comment}],v=>{
-    r.name=v.name;r.date=v.date;r.comment=v.comment;r.rating=Math.min(5,Math.max(1,parseInt(v.rating)||5));
-    save('miori_reviews',reviewsData);renderReviews();showToast('บันทึกรีวิวสำเร็จ');},
-    ()=>{reviewsData=reviewsData.filter(x=>x.id!=id);save('miori_reviews',reviewsData);renderReviews();showToast('ลบรีวิวสำเร็จ');});
 }
 function openReviewModal(){$('review-modal').classList.remove('hidden');}
 function closeReviewModal(){$('review-modal').classList.add('hidden');}
